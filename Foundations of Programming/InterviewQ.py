@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov  3 05:31:29 2019
+
+@author: divye
+"""
+
 """
 Began 11/3/19
 Divyesh Johri
@@ -19,31 +26,34 @@ they are not in the right order.
 
 The word "kangaroo" is the longest word in D, but it isn't a subsequence of S.
 """
-
-string = "abppplee"
-wordList = ["able", "ale", "apple", "bale", "kangaroo"]
-#print(subsequence(string, wordList))
-
-def subsequence(self, string, wordList):
-    #goodWords will contain words that are subsequent of the string
-    goodWords = []
-
-    for i in wordList:
-        if self.evaluate(string, i):
-            goodWords.append((i, len(i))
-
-    #Sort goodWords by their length using a lambda function
-    goodWords.sort(key= lambda t: t[1])
-
-    return goodWords[0]
-
-"""
-Helper method for subsequence(), will determine if word given is subsequent to
-given string through boolean
-"""
-def evaluate(self, string, word):
-    n = 0
-    for i in string:
-        if i == word[n]:
-            n += 1
-    return n == len(word)
+class InterviewQ:
+    """
+    >> test = InterviewQ()
+    >> test.subsequence("abppplee", ["able", "ale", "apple", "bale", "kangaroo"])
+    'apple'
+    """
+    
+    def subsequence(self, string, wordList):
+        #goodWords will contain words that are subsequent of the string
+        goodWords = []
+    
+        for i in wordList:
+            if self.evaluate(string, i):
+                goodWords.append((i, len(i)))
+    
+        #Sort goodWords by their length using a lambda function
+        goodWords.sort(key= lambda t: t[1], reverse = True)
+        return goodWords[0][0]
+    
+    """
+    Helper method for subsequence(), will determine if word given is subsequent to
+    given string through boolean    
+    """
+    def evaluate(self, string, word):
+        n = 0
+        for i in string:
+            if i == word[n]:
+                n += 1
+            if n == len(word):
+                return True
+        return False
