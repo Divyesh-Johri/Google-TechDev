@@ -1,12 +1,15 @@
 import java.util.Scanner;
-
 // Has CodingBat solutions and others
 // Also used to mess around with functions
 
 public class CodingBat {
 	
 	public static void main (String [] args) {
-		System.out.println("haha");
+		
+		System.out.println(sumNumbers("abc123xyz"));
+		System.out.println(sumNumbers("aa11b33"));
+		System.out.println(sumNumbers("7 11"));
+		
 	}
 	
 	/** stringSplosion CodingBat problem
@@ -68,14 +71,50 @@ public class CodingBat {
 	 */
 	public static String withoutString(String base, String remove) {		
 		
+			// Increment through the string and find substrings in base that equal remove
 			for(int i = 0; i < base.length(); i++) {
-				if (i+remove.length() > base.length()){
+				if (i+remove.length() > base.length()){ // To prevent IndexOutOfBounds
 					break;
 				} else if (base.substring(i, i+remove.length()).equalsIgnoreCase(remove)) {
-					base.replace(base.substring(i, i+remove.length()), "");
+					base = base.replaceAll(base.substring(i, i+remove.length()), "");
+				}
+			}	
+			
+		return base;
+	}
+	
+	/** sumNumbers CodingBat problem
+	 * 
+	 * Given a string, return the sum of the numbers appearing in the string, ignoring all other characters.
+	 * A number is a series of 1 or more digit chars in a row. (Note: Character.isDigit(char) tests if a char 
+	 * is one of the chars '0', '1', .. '9'. Integer.parseInt(string) converts a string to an int.)
+	 * 
+	 * sumNumbers("abc123xyz") → 123
+	 * sumNumbers("aa11b33") → 44
+	 * sumNumbers("7 11") → 18
+	 */
+	public static int sumNumbers(String str) {
+		
+		// Converting string to a char array for easier traversal
+		// Also using currentNum and sum to help find and sum numbers
+		char[] stringList = str.toCharArray();
+		String currentNum = "";
+		int sum = 0;
+		
+		// Traverse through the char array, find digits, and if the number has ended,
+		// add to the total sum
+		for (int i = 0; i < stringList.length; i++){
+			if (Character.isDigit(stringList[i])) {
+				
+				currentNum = currentNum.concat(Character.toString(stringList[i]));
+				
+				if (i+1 == stringList.length || !Character.isDigit(stringList[i+1])) {
+					sum += Integer.parseInt(currentNum);
+					currentNum = "";
 				}
 			}
-	
-		return base;
+		}
+		
+		return sum;
 	}
 }
