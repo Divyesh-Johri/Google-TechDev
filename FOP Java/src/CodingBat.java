@@ -6,9 +6,9 @@ public class CodingBat {
 	
 	public static void main (String [] args) {
 		
-		System.out.println(sumNumbers("abc123xyz"));
-		System.out.println(sumNumbers("aa11b33"));
-		System.out.println(sumNumbers("7 11"));
+		System.out.println(canBalance(new int[] {1, 1, 1, 2, 1}));
+		//System.out.println(canBalance(new int[] {2, 1, 1, 2, 1}));
+		//System.out.println(canBalance(new int[] {10, 10}));
 		
 	}
 	
@@ -117,4 +117,50 @@ public class CodingBat {
 		
 		return sum;
 	}
+	
+	/** canBalance CodingBat problem
+	 * 
+	 * Given a non-empty array, return true if there is a place to split the array so that the sum of the 
+	 * numbers on one side is equal to the sum of the numbers on the other side.
+	 * 
+	 * canBalance(new int[] {1, 1, 1, 2, 1}) → true
+	 * canBalance(new int[] {2, 1, 1, 2, 1}) → false
+	 * canBalance(new int[] {10, 10}) → true
+	 */
+	public static boolean canBalance(int[] nums) {
+		 	// Start in the middle of the array, shift towards the side that has a larger sum.
+			// If the side that was smaller becomes larger without balance, its impossible.
+		
+			int divide = nums.length / 2; //Start in the middle of the array\
+			
+						
+			class LocalTemp{
+				int sumL = 0;
+				int sumR = 0;
+				temp = nums.toString();
+				System.out.println("nums is " + temp);
+				void sums(int divide) {
+					for (int i = 0; i < nums.length; i++) {
+						if (i < divide)
+							sumL += nums[i];
+						else
+							sumR += nums[i];
+					}
+					System.out.println("sumL: " + sumL);
+					System.out.println("sumR: " + sumR);
+				}
+			}
+			
+			LocalTemp s = new LocalTemp();
+			s.sums(divide);
+			if (s.sumL == s.sumR) { return true; }
+			else if (s.sumL < s.sumR) {
+				while (s.sumL < s.sumR && divide != nums.length) { s.sums(divide + 1); }
+				return s.sumL == s.sumR ? true : false;		
+			} else {
+				while (s.sumL > s.sumR && divide != 0) { s.sums(divide - 1); }
+				return s.sumL == s.sumR ? true : false;
+			}
+	}
+	
 }
