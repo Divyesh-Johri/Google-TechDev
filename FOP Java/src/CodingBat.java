@@ -131,36 +131,37 @@ public class CodingBat {
 		 	// Start in the middle of the array, shift towards the side that has a larger sum.
 			// If the side that was smaller becomes larger without balance, its impossible.
 		
-			int divide = nums.length / 2; //Start in the middle of the array\
+			int divide = nums.length / 2; //Start in the middle of the array
+			int sumL = 0;
+			int sumR = 0;
 			
-						
-			class LocalTemp{
-				int sumL = 0;
-				int sumR = 0;
-				temp = nums.toString();
-				System.out.println("nums is " + temp);
-				void sums(int divide) {
-					for (int i = 0; i < nums.length; i++) {
-						if (i < divide)
-							sumL += nums[i];
-						else
-							sumR += nums[i];
-					}
-					System.out.println("sumL: " + sumL);
-					System.out.println("sumR: " + sumR);
+			//
+			do {
+				// Move the divider
+				if (sumL < sumR)
+					divide++;
+				if (sumL > sumR)
+					divide--;
+				
+				// Reset sums
+				sumL = 0;
+				sumR = 0;
+				
+				// Find new sums			
+				for (int i = 0; i < nums.length; i++) {
+					if (i < divide)
+						sumL += nums[i];
+					else
+						sumR += nums[i];
 				}
-			}
-			
-			LocalTemp s = new LocalTemp();
-			s.sums(divide);
-			if (s.sumL == s.sumR) { return true; }
-			else if (s.sumL < s.sumR) {
-				while (s.sumL < s.sumR && divide != nums.length) { s.sums(divide + 1); }
-				return s.sumL == s.sumR ? true : false;		
-			} else {
-				while (s.sumL > s.sumR && divide != 0) { s.sums(divide - 1); }
-				return s.sumL == s.sumR ? true : false;
-			}
+				
+				// Check for balance
+				if (sumL == sumR)
+					return true;
+				
+			} while (divide > 0 && divide < nums.length);
+				
+			return false;
 	}
 	
 }
