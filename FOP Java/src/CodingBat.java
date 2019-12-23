@@ -7,6 +7,14 @@ public class CodingBat {
 	public static void main (String [] args) {
 		
 		System.out.println(canBalance(new int[] {1, 1, 1, 2, 1}));
+		/*
+		int[] nums = new int[] {1,1,2,1};
+		int sum = 0;
+		for (int i = 0; i < nums.length; i++) {
+			sum += nums[i];
+		}
+		System.out.println(sum);
+		*/
 		//System.out.println(canBalance(new int[] {2, 1, 1, 2, 1}));
 		//System.out.println(canBalance(new int[] {10, 10}));
 		
@@ -127,41 +135,34 @@ public class CodingBat {
 	 * canBalance(new int[] {2, 1, 1, 2, 1}) → false
 	 * canBalance(new int[] {10, 10}) → true
 	 */
+	// It's slow, but much easier to write
 	public static boolean canBalance(int[] nums) {
-		 	// Start in the middle of the array, shift towards the side that has a larger sum.
-			// If the side that was smaller becomes larger without balance, its impossible.
+		// Start at the beginning, then inch divider up the list until
+		// both sides balance. If end is reached with no balance, return false.
 		
-			int divide = nums.length / 2; //Start in the middle of the array
-			int sumL = 0;
-			int sumR = 0;
+		int divider = 1;
+		int sumL = 0;
+		int sumR = 0;
+		
+		while (divider < nums.length) {
+			for (int i = 0; i < nums.length; i++) {
+				if (i < divider) 
+					sumL += nums[i];					
+				else
+					sumR += nums[i];
+			}
 			
-			//
-			do {
-				// Move the divider
-				if (sumL < sumR)
-					divide++;
-				if (sumL > sumR)
-					divide--;
-				
-				// Reset sums
-				sumL = 0;
-				sumR = 0;
-				
-				// Find new sums			
-				for (int i = 0; i < nums.length; i++) {
-					if (i < divide)
-						sumL += nums[i];
-					else
-						sumR += nums[i];
-				}
-				
-				// Check for balance
-				if (sumL == sumR)
+			if (sumL == sumR)
 					return true;
-				
-			} while (divide > 0 && divide < nums.length);
-				
-			return false;
+			
+			sumL = 0;
+			sumR = 0;
+			divider++;			
+		}
+		
+		return false;
 	}
+	
+	
 	
 }
